@@ -15,6 +15,7 @@ using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
 using Microsoft.EntityFrameworkCore.Sqlite;
+using Core.Interfaces;
 
 namespace API
 {
@@ -33,6 +34,7 @@ namespace API
         public void ConfigureServices(IServiceCollection services)
         {
 
+            services.AddScoped<IProductRepository,ProductRepository>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
