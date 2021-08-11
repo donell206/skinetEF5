@@ -20,6 +20,8 @@ using API.Helpers;
 using API.Middleware;
 using API.Errors;
 using API.Extensions;
+using StackExchange.Redis;
+
 
 namespace API
 {
@@ -32,7 +34,8 @@ namespace API
             _config= config;
         }
 
-       // public IConfiguration Configuration { get; }
+       
+               // public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -45,6 +48,12 @@ namespace API
 
             services.AddDbContext<StoreContext>(X=>X.UseSqlite(_config.GetConnectionString("DefaultConnection")));
 
+  
+            services.AddSingleton<IConnectionMultiplexer>(c =>
+            {
+                var configuration = ConfigurationOptions.Parse(_config.GetConnectionString("Redis"), true);
+                return ConnectionMultiplexer.Connect(configuration);
+            });
 
             services.AddAplicationServices();
             services.AddSwaggerDocumentation();

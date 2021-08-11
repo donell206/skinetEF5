@@ -6,6 +6,9 @@
 
 <ItemGroup>
    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="5.0.2" />
+   <PackageReference Include="Pipelines.Sockets.Unofficial" Version="2.2.0" />
+   <PackageReference Include="StackExchange.Redis" Version="2.2.62" />
+   <PackageReference Include="System.Diagnostics.PerformanceCounter" Version="5.0.1" />
 </ItemGroup>
 
   <PropertyGroup>
