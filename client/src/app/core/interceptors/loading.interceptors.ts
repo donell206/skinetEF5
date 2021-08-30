@@ -8,17 +8,16 @@ import {
 import { Observable } from 'rxjs';
 import { BusyService } from '../services/busy.service';
 import { delay, finalize } from 'rxjs/operators';
-
 @Injectable()
 export class LoadingInterceptor implements HttpInterceptor {
-
   constructor(private busyService: BusyService) { }
 
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-
-    this.busyService.busy();
-    return next.handle(req).pipe(
-        delay(1000),
+  intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+    if (!request.url.includes('emailexists')) {
+      this.busyService.busy();
+    }
+    return next.handle(request).pipe(
+      delay(1000),
       finalize(() => {
         this.busyService.idle();
       })
