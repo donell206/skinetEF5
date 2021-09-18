@@ -14,7 +14,7 @@ export class OrderTotalsComponent implements OnInit {
   constructor(private basketService:BasketService) { }
 
   ngOnInit(): void {
-    this.basketTotal$!=this.basketService.basketTotal$;
+    this.basketTotal$=this.basketService.basketTotal$;
   }
 
 }

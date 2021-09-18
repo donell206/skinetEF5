@@ -31,8 +31,9 @@
     "strictDomEventTypes":false,
     "alwaysStrict": true,
     "strictNullChecks": false,
-    
-    "enableI18nLegacyMessagesIdFormat":false
+    "enableI18nLegacyMessagesIdFormat":false,
+
+    "enableIvy": false
     
 
   }
