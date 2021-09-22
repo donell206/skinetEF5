@@ -10,6 +10,7 @@
    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.12.1" />
    <PackageReference Include="Pipelines.Sockets.Unofficial" Version="2.2.0" />
    <PackageReference Include="StackExchange.Redis" Version="2.2.62" />
+   <PackageReference Include="Stripe.net" Version="39.68.0" />
    <PackageReference Include="System.Diagnostics.PerformanceCounter" Version="5.0.1" />
    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.12.1" />
 </ItemGroup>
