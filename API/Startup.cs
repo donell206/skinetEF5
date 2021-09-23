@@ -13,8 +13,9 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
+using System.IO;
+using Microsoft.Extensions.FileProviders;
 
-using Microsoft.EntityFrameworkCore.Sqlite;
 using Core.Interfaces;
 using API.Helpers;
 using API.Middleware;
@@ -28,13 +29,11 @@ namespace API
 {
     public class Startup
     {
-
         private readonly IConfiguration _config;
         public Startup(IConfiguration config)
         {
             _config = config;
         }
-
 
         // public IConfiguration Configuration { get; }
 
@@ -46,10 +45,10 @@ namespace API
             services.AddAutoMapper(typeof(MappingProfiles));
             services.AddControllers();
             services.AddDbContext<StoreContext>(x =>
-                x.UseSqlite(_config.GetConnectionString("DefaultConnection")));
+                x.UseNpgsql(_config.GetConnectionString("DefaultConnection")));
             services.AddDbContext<AppIdentityDbContext>(x =>
             {
-                x.UseSqlite(_config.GetConnectionString("IdentityConnection"));
+                x.UseNpgsql(_config.GetConnectionString("IdentityConnection"));
             });
 
 
@@ -86,6 +85,17 @@ namespace API
 
             app.UseRouting();
             app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(Directory.GetCurrentDirectory(), "Content")
+                ),
+                RequestPath = "/content"
+            });
+
+
+
+
             app.UseCors("CorsPolicy");
             app.UseAuthentication();
 
@@ -95,6 +105,8 @@ namespace API
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapFallbackToController("Index", "Fallback");
+
             });
         }
     }
